@@ -1,0 +1,9 @@
+projectName: okta-firewall
+ingressDomain: .xip.io
+containerPath: kwop/oidctest:latest
+containerFront: nginx
+oidc:
+  clientId: 0oap9joqhFbUfxa8B5d6
+  clientSecret: dNYVDuK6K80TY93Lklw2Sx_wRe3-WkyX7xXl-YHv
+  externalEndpoint: https://dev-17904312.okta.com
+  redirectPath: /authorization-code/callback

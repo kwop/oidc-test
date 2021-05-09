@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-configmap
+data:
+  env.secret: "igorConnaitLeSecret"
+  env.cookie_domain: {{ .Values.ingressDomain }}
+  env.redirect_uri: https://{{ .Values.projectName }}{{ .Values.ingressDomain }}{{ .Values.oidc.redirectPath }}
+  env.cookie_secure: "True"
+  client_secrets.json: |
+    {
+      "web": {
+        "token_uri": "{{ .Values.oidc.externalEndpoint }}/oauth2/default/v1/token",
+        "auth_uri": "{{ .Values.oidcEndpoint }}/oauth2/default/v1/authorize",
+        "client_secret": "{{ .Values.oidc.clientSecret }}",
+        "redirect_uris": [
+            "https://{{ .Values.projectName }}{{ .Values.ingressDomain }}{{ .Values.oidc.redirectPath }}"
+        ],
+        "issuer": "{{ .Values.oidc.externalEndpoint }}/oauth2/default",
+        "userinfo_uri": "{{ .Values.oidc.externalEndpoint }}/oauth2/default/v1/userinfo",
+        "client_id": "{{ .Values.oidc.clientId }}"
+      }
+    }

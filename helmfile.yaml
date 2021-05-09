@@ -1,0 +1,13 @@
+releases:
+
+  - name: okta-protected-endpoint
+    namespace: {{ .Values.user }}-okta-protected-endpoint
+    chart: ./releases/okta-protected-endpoint
+    values:
+      - ./releases/okta-protected-endpoint/values.yaml
+
+  - name: okta-firewall
+    namespace: okta-firewall
+    chart: ./releases/okta-firewall
+    values:
+      - ./releases/okta-firewall/values.yaml

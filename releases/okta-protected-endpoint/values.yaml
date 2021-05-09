@@ -1,0 +1,5 @@
+projectName: okta-protected-endpoint
+ingressDomain: .xip.io
+containerFront: nginx
+oidcEndpoint: https://okta-firewall.xip.io
+user: USER1337
