@@ -162,6 +162,11 @@ class OpenIDConnect(object):
         app.config.setdefault('OIDC_INTROSPECTION_AUTH_METHOD', 'client_secret_post')
         app.config.setdefault('OIDC_TOKEN_TYPE_HINT', 'access_token')
 
+        # Proxy for limited env
+        app.config.setdefault('PROXY_DOMAIN', False)
+        app.config.setdefault('PROXY_PORT', False)
+
+
         if not 'openid' in app.config['OIDC_SCOPES']:
             raise ValueError('The value "openid" must be in the OIDC_SCOPES')
 
@@ -733,9 +738,15 @@ class OpenIDConnect(object):
             logger.debug("CSRF token mismatch")
             return True, self._oidc_error()
 
+        proxy_info = False
+        if current_app.config['PROXY_DOMAIN']:
+            proxy_info = httplib2.ProxyInfo(proxy_type=httplib2.socks.PROXY_TYPE_HTTP,
+                                            proxy_host=current_app.config['PROXY_DOMAIN'],
+                                            proxy_port=int(current_app.config['PROXY_PORT']))
+
         # make a request to IdP to exchange the auth code for OAuth credentials
         flow = self._flow_for_request()
-        credentials = flow.step2_exchange(code)
+        credentials = flow.step2_exchange(code, httplib2.Http(proxy_info=proxy_info))
         id_token = credentials.id_token
         if not self._is_id_token_valid(id_token):
             logger.debug("Invalid ID token")

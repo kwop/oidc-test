@@ -11,6 +11,8 @@ app.config.update({
     'SECRET_KEY': os.environ.get('APP_SECRET', 'SomethingNotEntirelySecret'),
     'OIDC_CLIENT_SECRETS': './client_secrets.json',
     'OIDC_ID_COOKIE_DOMAIN': os.environ.get('COOKIE_DOMAIN', None),
+    'PROXY_DOMAIN': os.environ.get('PROXY_DOMAIN', None),
+    'PROXY_PORT': os.environ.get('PROXY_PORT', None),
     'OIDC_DEBUG': True,
     'OIDC_ID_TOKEN_COOKIE_SECURE': os.environ.get('COOKIE_SECURE', False),
     'OIDC_SCOPES': ["openid", "profile"],
@@ -88,4 +90,5 @@ def base64_to_str(data):
 
 
 if __name__ == '__main__':
+    logger.warning(msg="Proxy config : domain {} port {}".format(app.config.get("PROXY_DOMAIN"), app.config.get("PROXY_PORT")))
     app.run(host="0.0.0.0", port=int(os.environ.get('PORT', 8080)), debug=True)

@@ -12,5 +12,7 @@ services:
       COOKIE_DOMAIN: ${COOKIE_DOMAIN}
       REDIRECT_URI: ${REDIRECT_URI}
       COOKIE_SECURE: ${COOKIE_SECURE}
+      PROXY_DOMAIN: ${PROXY_DOMAIN}
+      PROXY_PORT: ${PROXY_PORT}
     volumes:
       - ./oidc-front:/usr/src/app
