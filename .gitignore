@@ -1,0 +1,8 @@
+testenv
+custom-login/client_secrets.json
+node_modules/
+okta-oidc-tck/
+build2/
+yarn-error.log
+.DS_Store
+

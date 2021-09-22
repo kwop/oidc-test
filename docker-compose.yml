@@ -1,0 +1,13 @@
+version: '3.7'
+services:
+  custom-login:
+    container_name: custom-login
+    build:
+      context: custom-login
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      COOKIE_DOMAIN: ${COOKIE_DOMAIN}
+    volumes:
+      - ./custom-login:/usr/src/app
